@@ -3,20 +3,27 @@ import { Inter } from 'next/font/google'
 import { Fragment } from 'react'
 import Hero from '@/components/home-page/Hero'
 import FeaturedPosts from '@/components/home-page/featured-posts'
+import { getFeaturedPosts } from '@/lib/post-util'
 
 const inter = Inter({ subsets: ['latin'] })
 
-const dummy = [
-  {title:'testing', image:'started.jpg', excerpt:'testing', date:'11-21-2022', slug:'started'},
-  {title:'testing2', image:'started.jpg', excerpt:'testing2', date:'01-10-2022', slug:'started2'},
-  {title:'testing3', image:'started.jpg', excerpt:'testing3', date:'03-03-2023', slug:'started3'},
-]
 
-export default function Home() {
+export default function Home(props) {
   return (
     <Fragment>
       <Hero />
-      <FeaturedPosts posts={dummy} />
+      <FeaturedPosts posts={props.posts} />
     </Fragment>
   )
+}
+
+export function getStaticProps(){
+  const featured = getFeaturedPosts()
+
+  return {
+    props: {
+      posts: featured
+    },
+    revalidate: 60
+  }
 }
