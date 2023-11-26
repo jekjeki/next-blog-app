@@ -19,8 +19,10 @@ async function handler(req, res){
 
         let client
 
+        let connection_code = `mongodb+srv://${process.env.mongodb_username}:${process.env.mongodb_password}@${process.env.mongodb_cluster}.jvzl4pa.mongodb.net/`
+
         try {
-            client = await MongoClient.connect('mongodb+srv://zaki:zaki123@cluster0.jvzl4pa.mongodb.net/')
+            client = await MongoClient.connect(connection_code)
         } catch (error) {
             res.status(400).json({ message: 'could not connect to database' })
             return 
